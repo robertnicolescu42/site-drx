@@ -1,0 +1,18 @@
+.current-reservation{
+	color: white;
+}
+
+.future-reservation{
+	color: black;
+}
+
+.names{
+	background-color: gray;
+}
+
+.both h2{
+	font-size: 3.4rem;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	display:block;
+}
