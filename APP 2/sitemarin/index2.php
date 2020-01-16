@@ -1,7 +1,12 @@
 <?php
-require 'conectare.php';
-session_start();
+$conectare = mysqli_connect('localhost','root','','test');
 
+if(!$conectare){
+    die(mysqli_connect_error());
+}
+
+$result = mysqli_query($con, "SELECT * from camera_sedinte where id = 'VR PIT 5 8'");
+$id = $row['id'];
 ?>
 
 <!DOCTYPE html>
