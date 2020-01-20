@@ -66,12 +66,16 @@ if($resultrez ->num_rows > 0){
     while($rowrez = $resultrez->fetch_assoc() AND $rowsed = $resultsed->fetch_assoc() AND $roworg = $resultorg->fetch_assoc() AND $rowpart = $resultpart->fetch_assoc())
     {
             echo "<h2 class='mt-1 names'>Camera: ".$rowsed['id']." | maxim ".$rowsed['Capacitate_Maxima']." participanti</h2>";
-        if ($rowrez['date_start2'] < $rowrez['sysdate'] AND $rowrez['date_end2'] > $rowrez['sysdate']){
+        if ($rowrez['date_start2'] < $rowrez['sysdate'] AND $rowrez['date_end2'] > $rowrez['sysdate'])
+            {if($rowrez['este_confirmata2'] == True)
+            {
             echo "<div class ='current-reservation mt-2' style = 'background-color: red'>";
             echo "<h2>Rezervat pentru : ". $rowrez['description2']. "</h2><h2>Pana la : ". $rowrez['date_end2']."</h2><h2>Organizator : ".
-                 $roworg['Nume']."</h2><h2>Participanti: ".$rowpart['Nume']."</h2>";
+                 $roworg['Nume']."</h2><h2>Participanti: ".$rowpart['Nume']."</h2></div>";
+            }
+            else echo "<h2>Rezervarea exista dar nu este confirmata!</h2>";}
 
-        }
+        
         else
               echo "
               <div class='current-reservation mt-2' style='background-color: green'>
@@ -86,10 +90,12 @@ if($resultrez ->num_rows > 0){
 
 
             echo "<h2 class='mt-1 names'>Camera: ".$rowsed['id']." | maxim ".$rowsed['Capacitate_Maxima']." participanti</h2>";
-        if ($rowrez['date_start'] > $date){
+        if ($rowrez['date_start'] > $date)
+            {if($rowrez['Este_Confirmata'] == True){
             echo "<div class ='future-reservation mt-2' style = 'background-color: white'>";
             echo "<h2>Rezervat pentru : ". $rowrez['Description']. "</h2><h2>Pana la : ". $rowrez['date_end']."</h2><h2>Organizator : ".
                  $roworg['Nume']."</h2><h2>Participanti: ".$rowpart['Nume']."</h2>";}
+             else echo "<h2>Rezervarea exista dar nu este confirmata!</h2>";}
                 
     }
 }
