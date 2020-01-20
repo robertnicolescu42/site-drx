@@ -47,7 +47,9 @@ if ($result->num_rows > 0) {
                     <!-- in caz ca nu e rezervata camera in momentul asta,se golesc urmatoarele h2-uri si se face bg color verde-->
 <?php
 
-$sqlrez    = "SELECT id, Description, Id_Organizator, date_start, date_end, Este_Confirmata FROM rezervare order by date_end desc";
+$sqlrez    = "
+SELECT rezervare.id, rezervare.Description, rezervare.Id_Organizator, rezervare.date_start, rezervare.date_end, rezervare.Este_Confirmata, p.id as id2, p.description as description2, p.id_organizator as id_organizator2, p.date_start as date_start2, datasf as date_end2, p.este_confirmata as este_confirmata2, sysdate() as sysdate from rezervare cross join ( SELECT id, Description, Id_Organizator, date_start, date_end as datasf, Este_Confirmata FROM rezervare where sysdate() > date_start and sysdate() < date_end ) as p where datasf < rezervare.date_start limit 1
+";
 $resultrez = $conectare->query($sqlrez);
 $date      = date("Y-m-d H:i:s");
 
@@ -64,9 +66,9 @@ if($resultrez ->num_rows > 0){
     while($rowrez = $resultrez->fetch_assoc() AND $rowsed = $resultsed->fetch_assoc() AND $roworg = $resultorg->fetch_assoc() AND $rowpart = $resultpart->fetch_assoc())
     {
             echo "<h2 class='mt-1 names'>Camera: ".$rowsed['id']." | maxim ".$rowsed['Capacitate_Maxima']." participanti</h2>";
-        if ($rowrez['date_start'] < $date AND $rowrez['date_end'] > $date){
+        if ($rowrez['date_start2'] < $rowrez['sysdate'] AND $rowrez['date_end2'] > $rowrez['sysdate']){
             echo "<div class ='current-reservation mt-2' style = 'background-color: red'>";
-            echo "<h2>Rezervat pentru : ". $rowrez['Description']. "</h2><h2>Pana la : ". $rowrez['date_end']."</h2><h2>Organizator : ".
+            echo "<h2>Rezervat pentru : ". $rowrez['description2']. "</h2><h2>Pana la : ". $rowrez['date_end2']."</h2><h2>Organizator : ".
                  $roworg['Nume']."</h2><h2>Participanti: ".$rowpart['Nume']."</h2>";
 
         }
